@@ -1,20 +1,27 @@
 import * as vscode from 'vscode';
 import { fixMarkdown } from './fixMarkdown.js';
-import { timeoutedMessage } from './lib/timeoutedMessage.js';
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log('"vscode-extension-markdown-quick-fix" actived.');
+	console.log("vscode-extension-markdown-quick-fix activated.");
 
 	const disposable = vscode.commands.registerCommand(
-		"vscode-extension-markdown-quick-fix.markdownQuickFix",
+		"vscode-extension-markdown-quick-fix.markdown-quick-fix",
 		async (uri?: vscode.Uri, selectedUris?: vscode.Uri[]) => {
 			if (!uri) {
 				vscode.window.showErrorMessage("ドキュメントが読み取れませんでした。");
 				return;
 			}
 
-			await fixMarkdown(uri);
-			timeoutedMessage("修正可能なLintエラーを修正しました。", 3000);
+			await vscode.window.withProgress(
+				{
+					location: vscode.ProgressLocation.Notification,
+					title: "MarkDownの修正中...",
+					cancellable: false
+				},
+				async () => await fixMarkdown(uri)
+			);
+
+			vscode.window.showInformationMessage("修正可能なLintエラーを修正しました。");
 		}
 	);
 

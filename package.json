@@ -2,19 +2,21 @@
   "name": "vscode-extension-markdown-quick-fix",
   "displayName": "vscode-extension-markdown-quick-fix",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.145.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "vscode-extension-markdown-quick-fix.markdownQuickFix",
+        "command": "vscode-extension-markdown-quick-fix.markdown-quick-fix",
         "title": "MarkDown Quick Fix"
       }
     ],
@@ -22,14 +24,14 @@
       "editor/context": [
         {
           "when": "editorLangId == markdown",
-          "command": "vscode-extension-markdown-quick-fix.markdownQuickFix",
+          "command": "vscode-extension-markdown-quick-fix.markdown-quick-fix",
           "group": "navigation"
         }
       ],
       "explorer/context": [
         {
           "when": "resourceLangId == markdown",
-          "command": "vscode-extension-markdown-quick-fix.markdownQuickFix",
+          "command": "vscode-extension-markdown-quick-fix.markdown-quick-fix",
           "group": "navigation"
         }
       ]
