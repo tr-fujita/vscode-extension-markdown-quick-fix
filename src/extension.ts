@@ -18,10 +18,17 @@ export function activate(context: vscode.ExtensionContext) {
 					title: "MarkDownの修正中...",
 					cancellable: false
 				},
-				async () => await fixMarkdown(uri)
-			);
+				async () => {
+					const result = await fixMarkdown(uri);
 
-			vscode.window.showInformationMessage("修正可能なLintエラーを修正しました。");
+					// 異常系はビジネスロジック側で密にハンドリングしています。
+					if (!result.success) {
+						return;
+					}
+
+					vscode.window.showInformationMessage("修正可能なLintエラーを修正しました。");
+				}
+			);
 		}
 	);
 
